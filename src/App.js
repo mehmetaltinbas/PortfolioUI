@@ -14,7 +14,7 @@ function App() {
     return (
         <Router>
             <NavBar />
-            <section class="container mx-auto px-[70px] md:px-[100px] lg:px-[140px] xl:px-[200px] py-6">
+            <section className="container mx-auto px-[70px] md:px-[100px] lg:px-[140px] xl:px-[200px] py-6">
                 <Routes>
                     <Route path="/" element={<Home />}/>
                     <Route path="/portfolio" element={<Portfolio />}/>
