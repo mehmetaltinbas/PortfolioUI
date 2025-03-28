@@ -22,9 +22,8 @@ function Home() {
     return (
         <div className="flex flex-col justify-center items-center gap-2">
             <p className="text-2xl font-bold text-center">{user.firstName} {user.lastName}</p>
+            <p>{user.position}</p>
             <p>{user.bio}</p>
-            <p>{user.location}</p>
-            <p>{user.dateOfBirth}</p>
             <BodyButton>Download CV</BodyButton>
         </div>
     );

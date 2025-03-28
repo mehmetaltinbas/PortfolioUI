@@ -55,10 +55,10 @@ function Portfolio() {
                 <StandardGridContainer className="gap-2">
                     {projects.map((project) => (
                         <div key={project._id} data-id={project._id}>
-                        <StandardFlexContainer keyprop={project._id} dataId={project._id} onClick={SelectProject}>
-                            <p className="text-lg font-semibold">{project.title}</p>
-                            <p className="text-gray-600">{project.description}</p>
-                        </StandardFlexContainer>
+                            <StandardFlexContainer keyprop={project._id} dataId={project._id} onClick={SelectProject}>
+                                <p className="text-lg font-semibold">{project.title}</p>
+                                <p className="text-gray-600">{project.description}</p>
+                            </StandardFlexContainer>
                         </div>
                     ))}
                 </StandardGridContainer>
