@@ -6,13 +6,13 @@ function ProtectedRoute({ element }) {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
 
     useEffect(() => {
-        axios.get(`${process.env.API_URL}user/authorize`, { withCredentials: true })
+        axios.get(`${process.env.REACT_APP_API_URL}user/authorize`, { withCredentials: true })
             .then(response => setIsAuthenticated(response.data.isSuccess))
             .catch(() => setIsAuthenticated(false));
     }, []);
 
     if (isAuthenticated == null) return <p>Loading...</p>
-    return isAuthenticated ? element : <Navigate to="/" />;
+    return isAuthenticated ? element : <Navigate to="/admin/signin" />;
 }
 
 export default ProtectedRoute;

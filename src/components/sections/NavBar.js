@@ -3,7 +3,7 @@ import NavBarButton from '../buttons/NavBarButton';
 
 function NavBar() {
     return (
-        <section className="pt-3 mb-3 bg-gray-700">
+        <section className="pt-3 mb-3 bg-gray-700 shadow-lg">
             <div className="flex flex-col gap-1">
                 <div className="flex justify-center items-center gap-4 pb-3">
                     <NavBarButton><Link to='/'>Home</Link></NavBarButton>

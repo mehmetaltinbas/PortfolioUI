@@ -1,5 +1,6 @@
 import React from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { SiUpwork } from "react-icons/si";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -25,6 +26,9 @@ const SocialIcons = () => {
       </a>
       <a href={(contacts.find(c => c.type == "linkedin"))?.value} target="_blank" className="text-gray-400 hover:text-gray-800 transition duration-300 text-2xl">
         <FaLinkedin />
+      </a>
+      <a href={(contacts.find(c => c.type == "upwork"))?.value} target="_blank" className="text-gray-400 hover:text-gray-800 transition duration-300 text-2xl">
+        <SiUpwork />
       </a>
       <div className="w-[1px] h-20 bg-gray-800 mt-2"></div>
     </div>

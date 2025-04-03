@@ -1,14 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import StandardFlexContainer from "../../components/containers/standardFlexContainer";
-import StandardGridContainer from "../../components/containers/standardGridContainer";
-import BodyButton from "../../components/buttons/BodyButton";
-import batmanImage from "../../images/photo.png";
 
 function Resume() {
     const [user, setUser] = useState({});
     const [selectedExperience, setSelectedExperience] = useState(null);
-
 
     function formatDate(isoString) {
         const date = new Date(isoString);
@@ -50,32 +45,24 @@ function Resume() {
         fetchData();
     }, []);
 
-
-    useEffect(() => {
-        console.log(`${JSON.stringify(user, null, 2)}`);
-    }, [user]);
-
-    useEffect(() => {
-        console.log(`${JSON.stringify(selectedExperience, null, 2)}`);
-    }, [selectedExperience]);
-
     const SelectExperience = (experienceId) => {
         const experience =  user.experiences.find(e => e._id == experienceId);
         setSelectedExperience(experience);
     }
 
+    
     return (
         <div className="flex flex-col gap-16">
 
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 py-10">
                 <div className="w-full flex justify-between items-center gap-6">
-                    <p className="text-xl font-bold">AboutMe</p>
+                    <p className="text-xl font-bold whitespace-nowrap">About Me</p>
                     <span className="w-full h-[1px] bg-blue-700"></span>
                 </div>
                 <div></div>
                 <div className="w-full mx-auto flex flex-col justify-center items-center gap-2">
                     <p>{user.about}</p>
-                    <p>Here are a few technologies I've been working with recently:</p>
+                    <p className="underline">Skills</p>
                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
                         {user.skills?.map((skill) => (
                             <p>- {skill.name}</p>
@@ -83,7 +70,7 @@ function Resume() {
                     </div>
                 </div>
                 <div className="w-full mx-auto flex justify-center">
-                    <img src={batmanImage} className="w-[210px] h-[370px] object-cover rounded-[10px]"/>
+                    <img src={user.aboutMePhotoPath} className="w-[210px] h-[370px] object-cover rounded-[10px]"/>
                 </div>
             </div>
 

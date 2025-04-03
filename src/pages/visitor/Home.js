@@ -1,7 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import StandardFlexContainer from "../../components/containers/standardFlexContainer";
-import StandardGridContainer from "../../components/containers/standardGridContainer";
 import BodyButton from "../../components/buttons/BodyButton";
 
 function Home() {
@@ -19,13 +17,20 @@ function Home() {
         fetchData();
     }, []);
 
+    
     return (
-        <div className="flex flex-col justify-center items-center gap-2">
-            <p className="text-2xl font-bold text-center">{user.firstName} {user.lastName}</p>
-            <p>{user.position}</p>
-            <p>{user.bio}</p>
-            <BodyButton>Download CV</BodyButton>
+        <div className="flex justify-center items-center gap-10">
+            <div>
+                <img src={user.profilePhotoPath} className="w-[200px] h-[200px] object-cover rounded-full"/>
+            </div>
+            <div className="flex flex-col justify-center items-center gap-2">
+                <p className="text-2xl font-bold text-center">{user.firstName} {user.lastName}</p>
+                <p>{user.position}</p>
+                <p>{user.bio}</p>
+                <BodyButton>Download CV</BodyButton>
+            </div>
         </div>
+
     );
 }
 
