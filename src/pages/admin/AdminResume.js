@@ -206,8 +206,6 @@ function AdminResume() {
 
     async function handleExperienceUpdateSubmit(e, experienceId) {
         e.preventDefault();
-        console.log(experienceId);
-        console.log(experienceUpdateFormData);
         try {
             const response = (await axios.patch(
                 `${process.env.REACT_APP_API_URL}experience/update/${experienceId}`,

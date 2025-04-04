@@ -10,7 +10,6 @@ function NavBar() {
                     <NavBarButton><Link to='/resume'>Resume</Link></NavBarButton>
                     <NavBarButton><Link to='/portfolio'>Portfolio</Link></NavBarButton>
                     <NavBarButton><Link to='/contact'>Contact</Link></NavBarButton>
-                    <NavBarButton><Link to='/more'>More</Link></NavBarButton>
                 </div>
             </div>
         </section>
