@@ -8,7 +8,8 @@ function AdminPortfolio() {
     const [selectedProject, setSelectedProject] = useState({
         title: '',
         shortDescription: '',
-        longDescription: ''
+        longDescription: '',
+        projectSkills: []
     });
     const [projectUpdateFormData, setProjectUpdateFormData] = useState({});
     const [projectSkillForm, setProjectSkillForm] = useState({
@@ -19,8 +20,11 @@ function AdminPortfolio() {
     const [projectCreateForm, setProjectCreateForm] = useState({
         title: '',
         shortDescription: '',
-        longDescription: ''
+        longDescription: '',
+        projectSkills: []
     });
+    const [isProjectPhotoCreateForm, setIsProjectPhotoCreateForm] = useState(true);
+    const [projectPhoto, setProjectPhoto,] = useState(null);
 
 
     const fetchProjectData = async () => {
@@ -40,6 +44,7 @@ function AdminPortfolio() {
 
     function SelectProject(e) {
         e.preventDefault();
+
         const clickedProject = projects.find(p => p._id == e.currentTarget.dataset.id);
         setSelectedProject(clickedProject);
         setProjectUpdateFormData(clickedProject);
@@ -183,6 +188,57 @@ function AdminPortfolio() {
     }
 
 
+    async function toggleProjectPhotoCreateForm(e) {
+        e.preventDefault();
+        console.log("hit");
+        const projectPhotoCreateForm = document.getElementById('projectPhotoCreateForm');
+        const buttonRect = e.target.getBoundingClientRect();
+        const formRect = projectPhotoCreateForm.getBoundingClientRect();
+        setIsProjectPhotoCreateForm((prev) => !prev);
+        projectPhotoCreateForm.style.top = `${buttonRect.bottom + window.scrollY}px`;
+        projectPhotoCreateForm.style.left = `${buttonRect.left + (buttonRect.width/2) + window.scrollX - (formRect.width/2)}px`;
+    }
+
+
+    async function handleProjectPhotoCreateChange(e) {
+        setProjectPhoto(e.target.files[0]);
+    };
+
+
+    async function handleProjectPhotoCreateSubmit(e, projectId) {
+        e.preventDefault();
+        if (!projectPhoto) return;
+
+        const projectPhotoForm = new FormData();
+        projectPhotoForm.append("file", projectPhoto);
+
+        const response = (await axios.post(
+            `${process.env.REACT_APP_API_URL}projectphoto/create/${projectId}`,
+            projectPhotoForm,
+            {
+                headers: { "Content-Type": "multipart/form-data"},
+                withCredentials: true
+            }
+        )).data;
+        alert(response.message);
+        fetchProjectData();
+        toggleProjectPhotoCreateForm(e);
+    };
+
+
+    async function handleProjectPhotoDeleteSubmit(e) {
+        e.preventDefault();
+
+        const response = (await axios.delete(
+            `${process.env.REACT_APP_API_URL}projectphoto/delete`,
+            {
+                withCredentials: true
+            }
+        )).data;
+        alert(response.message);
+        fetchProjectData();
+    };
+
 
     return (
         <div className="w-full">
@@ -213,7 +269,7 @@ function AdminPortfolio() {
                             <button onClick={ToggleProjectSkillCreateForm} className="text-2xl text-blue-500">+</button>
                         </div>
                         <div className="w-full flex justify-start items-center gap-[10px]">
-                            {selectedProject.projectSkills.map((projectSkill) => (
+                            {selectedProject?.projectSkills?.map((projectSkill) => (
                                 <div className="flex justify-start items-center">
                                     <p className="whitespace-nowrap">• {projectSkill.name}</p>
                                     <form onSubmit={(e) => handleProjectSkillDeleteSubmit(e, projectSkill._id)}>
@@ -221,6 +277,15 @@ function AdminPortfolio() {
                                     </form>
                                 </div>
                             ))}
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                            <div className="flex justify-center items-center gap-2 md:col-span2 xl:col-span-3">
+                                <p className="font-semibold">Project Photos</p>
+                                <button onClick={toggleProjectPhotoCreateForm} className="text-2xl text-blue-500">+</button>
+                            </div>
+                            {selectedProject.projectPhotos.map((projectPhoto) => (
+                                    <img src={projectPhoto.value} className="w-[300px] h-[300px] object-cover rounded-[10px]"/>
+                                ))}
                         </div>
                     </div>
                 </div>
@@ -230,7 +295,7 @@ function AdminPortfolio() {
                         <p className="text-2xl font-bold text-center">Projects</p>    
                         <button onClick={toggleProjectCreateForm} className="text-2xl text-blue-400">+</button>
                     </div>
-                    {projects.map((project) => (
+                    {projects?.map((project) => (
                         <div key={project._id} data-id={project._id} onClick={SelectProject} className="w-[200px] h-[200px] bg-white p-6 rounded-2xl shadow-md border
                         flex flex-col justify-around items-center gap-2
                         transition hover:border-[#00316E] duration-300 hover:cursor-pointer">
@@ -277,6 +342,14 @@ function AdminPortfolio() {
                     className="border p-2 rounded-full" />
                 </div>
                 <button type="submit" className="p-2 border rounded-full">Create</button>
+            </form>
+
+
+            <form id="projectPhotoCreateForm" onSubmit={(e) => handleProjectPhotoCreateSubmit(e, selectedProject._id)}
+            className={`absolute ${isProjectPhotoCreateForm ? 'hidden' : ''} bg-white p-6 rounded-2xl shadow-md border
+            flex flex-col justify-center items-center gap-2`}>
+                <input type="file" onChange={handleProjectPhotoCreateChange}/>
+                <button type="submit" className="px-2 py-1 border rounded-full bg-blue-200">Update</button>
             </form>
 
 

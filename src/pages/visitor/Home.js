@@ -17,6 +17,28 @@ function Home() {
         fetchData();
     }, []);
 
+
+    async function downloadCV(e) {
+        e.preventDefault();
+        console.log(`${process.env.REACT_APP_API_URL}contact/cv/download`);
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}contact/cv/download`, {
+                responseType: 'blob',
+                withCredentials: true
+            });
+    
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'cv.pdf');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (error) {
+            console.error("CV download error:", error.message);
+        }
+    }
+
     
     return (
         <div className="flex justify-center items-center gap-10">
@@ -27,7 +49,8 @@ function Home() {
                 <p className="text-2xl font-bold text-center">{user.firstName} {user.lastName}</p>
                 <p>{user.position}</p>
                 <p>{user.bio}</p>
-                <BodyButton>Download CV</BodyButton>
+                <button onClick={downloadCV} className="py-1 px-4 border-[1px] border-gray rounded-full 
+                hover:border-black">Download CV</button>
             </div>
         </div>
 

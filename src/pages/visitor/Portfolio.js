@@ -33,22 +33,22 @@ function Portfolio() {
                         <div className="w-full flex items-center justify-start gap-4">
                             <BodyButton onClick={() => setProject({})}>←</BodyButton>
                             <p className="inline-block text-2xl font-semibold flex-1">{project.title}</p>
-                            {project.repositoryLinks.map((repositoryLink) => (
-                                <a href={repositoryLink} target="_blank" onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-gray-800 transition duration-300 text-xl">
+                            {project.projectLinks?.map((projectLink) => projectLink.type == "github" && (
+                                <a href={projectLink.name} target="_blank" onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-gray-800 transition duration-300 text-xl">
                                     <FaGithub />
                                 </a>
                             ))}
-                            {project.liveDemoLink ? (
+                            {project.projectLinks?.map((projectLink) => projectLink.type == "liveDemo" && (
                                 <a href={project.liveDemoLink} target="_blank" onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-gray-800 transition duration-300 text-lg">
                                 <FaExternalLinkAlt />
                                 </a>
-                            ): (<></>)}
+                            ))}
                         </div>
                     <div className="w-full flex flex-col justify-start items-start gap-2">
                         <p className="">{project.longDescription}</p>
                         <div className="w-full flex justify-start items-center gap-[10px]">
-                            {project.technologies.map((technologie) => (
-                                <p className="text-sm text-gray-400 whitespace-nowrap">• {technologie}</p>
+                            {project.projectSkills.map((projectSkill) => (
+                                <p className="text-sm text-gray-400 whitespace-nowrap">• {projectSkill.name}</p>
                             ))}
                         </div>
                         <div className="w-full flex justify-start items-center gap-2">
@@ -66,23 +66,23 @@ function Portfolio() {
                                 <div className="w-full flex justify-between items-center gap-2">
                                     <FaFolder className="text-xl" />
                                     <div className="flex justify-end items-center gap-2">
-                                        {project.repositoryLinks?.map((repositoryLink) => (
-                                            <a href={repositoryLink} target="_blank" onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-gray-800 transition duration-300 text-xl">
+                                        {project.projectLinks?.map((projectLink) => projectLink.type == "github" && (
+                                            <a href={projectLink.name} target="_blank" onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-gray-800 transition duration-300 text-xl">
                                                 <FaGithub />
                                             </a>
                                         ))}
-                                        {project.liveDemoLink ? (
+                                        {project.projectLinks?.map((projectLink) => projectLink.type == "liveDemo" && (
                                             <a href={project.liveDemoLink} target="_blank" onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-gray-800 transition duration-300 text-lg">
                                             <FaExternalLinkAlt />
                                             </a>
-                                        ): (<></>)}
+                                        ))}
                                     </div>
                                 </div>
                                 <p className="text-lg font-semibold">{project.title}</p>
                                 <p className="text-gray-600">{project.shortDescription}</p>
                                 <div className="w-full flex items-center gap-[10px] overflow-x-auto">
-                                    {project.technologies.map((technologie) => (
-                                        <p className="text-xs text-gray-600 font-medim whitespace-nowrap">• {technologie}</p>
+                                    {project.projectSkills.map((projectSkill) => (
+                                        <p className="text-xs text-gray-600 font-medim whitespace-nowrap">• {projectSkill.name}</p>
                                     ))}
                                 </div>
                             </div>
