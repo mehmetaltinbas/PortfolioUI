@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import BodyButton from "../../components/buttons/BodyButton";
+import Introduction from "../../components/sections/visitor/Introduction.js";
 
 function Home() {
     const [user, setUser] = useState({});
@@ -45,13 +45,7 @@ function Home() {
             <div>
                 <img src={user.profilePhotoPath} className="w-[200px] h-[200px] object-cover rounded-full"/>
             </div>
-            <div className="flex flex-col justify-center items-center gap-2">
-                <p className="text-2xl font-bold text-center">{user.firstName} {user.lastName}</p>
-                <p>{user.position}</p>
-                <p>{user.bio}</p>
-                <button onClick={downloadCV} className="py-1 px-4 border-[1px] border-gray rounded-full 
-                hover:border-black">Download CV</button>
-            </div>
+            <Introduction user={user} downloadCV={downloadCV} />
         </div>
 
     );
