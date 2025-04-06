@@ -51,8 +51,10 @@ function AdminResume() {
             const user = response.user;
     
             setUser(user);
-            setSelectedExperience(user.experiences[0]);
-            setExperienceUpdateFormData(user.experiences[0]);
+            if (user.experiences?.length > 0) {
+                setSelectedExperience(user.experiences[0]);
+                setExperienceUpdateFormData(user.experiences[0]);
+            }        
         } catch (error) {
             console.error(`\n Error message --> ${error.message} \n Error stack --> ${error.stack} \n`);
         }
@@ -160,7 +162,7 @@ function AdminResume() {
 
     async function handleExperienceChange(e) {
         const { name, value } = e.target;
-        setSkillFormData({ ...skillFormData, [name]: value });
+        setExperienceFormData({ ...experienceFormData, [name]: value });
     }
 
 
