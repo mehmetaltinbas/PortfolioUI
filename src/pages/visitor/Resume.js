@@ -55,7 +55,7 @@ function Resume() {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center h-screen text-xl font-bold">
+            <div className="flex justify-center items-center text-xl font-bold">
                 Loading...
             </div>
         )
