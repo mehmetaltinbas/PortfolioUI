@@ -141,9 +141,10 @@ function AdminResume() {
 
         const aboutMePhotoForm = new FormData();
         aboutMePhotoForm.append("file", userAboutPhoto);
+        aboutMePhotoForm.append("type", "about");
 
-        const response = (await axios.patch(
-            `${process.env.REACT_APP_API_URL}user/update/aboutmephoto`,
+        const response = (await axios.post(
+            `${process.env.REACT_APP_API_URL}userphoto/create`,
             aboutMePhotoForm,
             {
                 headers: { "Content-Type": "multipart/form-data"},
@@ -157,9 +158,10 @@ function AdminResume() {
 
     async function handleAboutMePhotoDeleteSubmit(e) {
         e.preventDefault();
+        const userPhotoId = user.userPhotos?.find(userPhoto => userPhoto.type == 'about')._id;
 
         const response = (await axios.delete(
-            `${process.env.REACT_APP_API_URL}user/delete/aboutmephoto`,
+            `${process.env.REACT_APP_API_URL}userphoto/delete/${userPhotoId}`,
             {
                 withCredentials: true
             }
@@ -200,7 +202,7 @@ function AdminResume() {
                     </div>
                 </div>
                 <div className="w-full mx-auto flex flex-col justify-center items-center">
-                    <img src={user.userPhotos?.find(userPhoto => userPhoto.type == 'about')} className="w-[210px] h-[370px] object-cover rounded-[10px]"/>
+                    <img src={user.userPhotos?.find(userPhoto => userPhoto.type == 'about')?.value} className="w-[210px] h-[370px] object-cover rounded-[10px]"/>
                     <form onSubmit={handleAboutMePhotoUpdateSubmit}>
                         <input type="file" onChange={handleAboutMePhotoUpdateChange}/>
                         <button type="submit" className="px-2 py-1 border rounded-full bg-blue-200">Update</button>
