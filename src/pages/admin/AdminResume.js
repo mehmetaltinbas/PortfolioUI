@@ -25,10 +25,24 @@ function AdminResume() {
     const [userAboutPhoto, setUserAboutPhoto] = useState(null);
 
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+
     const fetchUserData = async () => {
         try {
             const response = (await axios.get(`${process.env.REACT_APP_API_URL}user/${process.env.REACT_APP_USER_ID}`)).data;
             const user = response.user;
+
+            user.experiences.forEach(experience => {
+                experience.startDate = formatDate(experience.startDate);
+                experience.endDate = experience.isCurrent ? "Present" : formatDate(experience.endDate);
+            });
     
             setUser(user);
             if (user.experiences?.[0]) setSelectedExperience(user.experiences[0]);
@@ -110,12 +124,12 @@ function AdminResume() {
 
     async function toggleExperienceCreateForm(e) {
         e.preventDefault();
-        const experienceCreationForm = document.getElementById('experienceCreateForm');
+        const experienceCreateForm = document.getElementById('experienceCreateForm');
         const buttonRect = e.target.getBoundingClientRect();
-        const formRect = experienceCreationForm.getBoundingClientRect();
+        const formRect = experienceCreateForm.getBoundingClientRect();
         setIsExperienceCreateFormHidden((prev) => !prev);
-        experienceCreationForm.style.top = `${buttonRect.bottom + window.scrollY}px`;
-        experienceCreationForm.style.left = `${buttonRect.left + (buttonRect.width/2) + window.scrollX - (formRect.width/2)}px`;
+        experienceCreateForm.style.top = `${buttonRect.bottom + window.scrollY}px`;
+        experienceCreateForm.style.left = `${buttonRect.left + (buttonRect.width/2) + window.scrollX - (formRect.width/2)}px`;
     }
 
 
@@ -216,11 +230,11 @@ function AdminResume() {
             <ExperienceSection user={user} fetchUserData={fetchUserData} selectedExperience={selectedExperience} SelectExperience={SelectExperience} toggleExperienceCreateForm={toggleExperienceCreateForm} toggleExperienceUpdateForm={toggleExperienceUpdateForm} />
 
 
-            <SkillCreateForm id="skillCreateForm" fetchUserData={fetchUserData} toggleForm={toggleSkillCreateForm} isHidden={isSkillCreateFormHidden} />
+            <SkillCreateForm fetchUserData={fetchUserData} toggleForm={toggleSkillCreateForm} isHidden={isSkillCreateFormHidden} />
 
-            <ExperienceCreateForm id="experienceCreateForm" fetchUserData={fetchUserData} toggleForm={toggleExperienceCreateForm} isHidden={isExperienceCreateFormHidden} />
+            <ExperienceCreateForm fetchUserData={fetchUserData} toggleForm={toggleExperienceCreateForm} isHidden={isExperienceCreateFormHidden} />
 
-            <ExperienceUpdateForm id="experienceUpdateForm" fetchUserData={fetchUserData} toggleForm={toggleExperienceUpdateForm} isHidden={isExperienceUpdateFormHidden} selectedExperience={selectedExperience} firstExperience={user?.experiences?.length > 0 ? user.experiences[0] : null} />
+            <ExperienceUpdateForm fetchUserData={fetchUserData} toggleForm={toggleExperienceUpdateForm} isHidden={isExperienceUpdateFormHidden} selectedExperience={selectedExperience} firstExperience={user?.experiences?.length > 0 ? user.experiences[0] : null} />
             
         </div>
     );

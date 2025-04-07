@@ -10,38 +10,37 @@ function Resume() {
         return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}user/${process.env.REACT_APP_USER_ID}`);
-                const userData = response.data.user;
-        
-                const endDateFormat = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;  // "2025-03-01T00:00:00.000Z" format
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}user/${process.env.REACT_APP_USER_ID}`);
+            const userData = response.data.user;
+    
+            const endDateFormat = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;  // "2025-03-01T00:00:00.000Z" format
 
-                userData.experiences.forEach(experience => {
-                    experience.startDate = formatDate(experience.startDate);
-                    if (endDateFormat.test(experience.endDate)) {
-                        experience.endDate = formatDate(experience.endDate);
-                    } 
-                });
-                userData.educations.forEach(education => {
-                    education.startDate = new Date(education.startDate).toLocaleDateString();
-                    education.startDate = formatDate(education.startDate);
-                    if (endDateFormat.test(education.endDate)) {
-                        education.endDate = new Date(education.endDate).toLocaleDateString();
-                        education.endDate = formatDate(education.endDate);
-                    } 
-                });
+            userData.experiences.forEach(experience => {
+                experience.startDate = formatDate(experience.startDate);
+                experience.endDate = experience.isCurrent ? "Present" : formatDate(experience.endDate);
+            });
+            userData.educations.forEach(education => {
+                education.startDate = new Date(education.startDate).toLocaleDateString();
+                education.startDate = formatDate(education.startDate);
+                if (endDateFormat.test(education.endDate)) {
+                    education.endDate = new Date(education.endDate).toLocaleDateString();
+                    education.endDate = formatDate(education.endDate);
+                } 
+            });
 
-                const birthdate = new Date(userData.dateOfBirth);
-                userData.age = new Date().getFullYear() - birthdate.getFullYear();
-        
-                setUser(userData);
-                setSelectedExperience(userData.experiences[0]);
-            } catch (error) {
-                console.error(`\n Error message --> ${error.message} \n Error stack --> ${error.stack} \n`);
-            }
+            const birthdate = new Date(userData.dateOfBirth);
+            userData.age = new Date().getFullYear() - birthdate.getFullYear();
+    
+            setUser(userData);
+            setSelectedExperience(userData.experiences[0]);
+        } catch (error) {
+            console.error(`\n Error message --> ${error.message} \n Error stack --> ${error.stack} \n`);
         }
+    }
+
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -70,7 +69,7 @@ function Resume() {
                     </div>
                 </div>
                 <div className="w-full mx-auto flex justify-center">
-                    <img src={user.aboutMePhotoPath} className="w-[210px] h-[370px] object-cover rounded-[10px]"/>
+                    <img src={user?.userPhotos?.find(userPhoto => userPhoto.type == 'about')?.value} className="w-[210px] h-[370px] object-cover rounded-[10px]"/>
                 </div>
             </div>
 

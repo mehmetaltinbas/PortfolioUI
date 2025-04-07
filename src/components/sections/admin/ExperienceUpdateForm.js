@@ -78,12 +78,12 @@ function ExperienceUpdateForm({ fetchUserData, toggleForm, isHidden, handleChang
             </div>
             <div className="flex justify-start items-center gap-2">
                 <label>StartDate: </label>
-                <input id="startDate" name="startDate" value={formData.startDate} onChange={handleChange} placeholder="startDate..."
+                <input id="startDate" type="date" name="startDate" value={formData.startDate} onChange={handleChange} placeholder="startDate..."
                 className="border p-2 rounded-full" />
             </div>
             <div className="flex justify-start items-center gap-2">
                 <label>EndDate: </label>
-                <input id="endDate" name="endDate" value={formData.endDate} onChange={handleChange} placeholder="endDate..."
+                <input id="endDate" type="date" name="endDate" value={formData.endDate} onChange={handleChange} placeholder="endDate..."
                 className="border p-2 rounded-full" />
             </div>
             <button type="submit" className="p-2 border rounded-full">Update</button>

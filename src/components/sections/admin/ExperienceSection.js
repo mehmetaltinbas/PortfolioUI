@@ -75,7 +75,7 @@ function ExperienceSection({ fetchUserData, user, selectedExperience, SelectExpe
                 <span className="w-full h-[1px] bg-blue-700"></span>
             </div>
             <div></div>
-            <button onClick={toggleExperienceCreateForm} className="w-fit py-1 px-4 border-[1px] border-gray rounded-full
+            <button onClick={(e) => toggleExperienceCreateForm(e)} className="w-fit py-1 px-4 border-[1px] border-gray rounded-full
             hover:border-black ">Add Experience</button>
             <div className="w-full md:col-span-3 flex flex-col justify-start items-start">
                 <div className="w-full flex justify-center items-start gap-2">

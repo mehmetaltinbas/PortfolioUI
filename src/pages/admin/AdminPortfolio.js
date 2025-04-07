@@ -3,8 +3,6 @@ import axios from "axios";
 import ProjectCard from '../../components/sections/admin/ProjectCard.js';
 import ProjectDetail from "../../components/sections/admin/ProjectDetails.js";
 import ProjectCreateForm from "../../components/sections/admin/ProjectCreateForm.js";
-import ProjectSkillCreateForm from "../../components/sections/admin/ProjectSkillCreateForm.js";
-import ProjectPhotoCreateForm from "../../components/sections/admin/ProjectPhotoCreateForm.js";
 
 function AdminPortfolio() {
     const [projects, setProjects] = useState([]);
@@ -12,36 +10,32 @@ function AdminPortfolio() {
         _id: ''
     });
     const [projectCreateFormData, setProjectCreateFormData] = useState({ title: '', shortDescription: '', longDescription: '' });
-    const [projectSkillFormData, setProjectSkillFormData] = useState({ name: '' });
-    const [isProjectSkillCreateFormHidden, setIsProjectSkillCreateFormHidden] = useState(true);
     const [isProjectCreateFormHidden, setIsProjectCreateFormHidden] = useState(true);
-    const [isProjectPhotoCreateFormHidden, setIsProjectPhotoCreateFormHidden] = useState(true);
-    const [projectPhoto, setProjectPhoto] = useState(null);
 
-    const fetchProjects = async () => {
+
+    const fetchProjectsData = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}project/getallbyuserid/${process.env.REACT_APP_USER_ID}`);
         setProjects(response.data.projects);
     };
 
     useEffect(() => {
-        fetchProjects();
+        fetchProjectsData();
     }, []);
+
 
     async function selectProject(e, project) {
         e.preventDefault();
         setSelectedProject(project);
     };
 
-    async function handleProjectUpdate(e) {
+    async function toggleProjectCreateForm(e) {
         e.preventDefault();
-        const response = await axios.patch(`${process.env.REACT_APP_API_URL}project/update/${selectedProject._id}`, selectedProject);
-        alert(response.data.message);
-        fetchProjects();
-    };
-
-    async function handleToggleProjectCreateForm(e) {
-        e.preventDefault();
-        setIsProjectCreateFormHidden(prev => !prev);
+        const projectCreateForm = document.getElementById('projectCreateForm');
+        const buttonRect = e.target.getBoundingClientRect();
+        const formRect = projectCreateForm.getBoundingClientRect();
+        setIsProjectCreateFormHidden((prev) => !prev);
+        projectCreateForm.style.top = `${buttonRect.bottom + window.scrollY}px`;
+        projectCreateForm.style.left = `${buttonRect.left + (buttonRect.width/2) + window.scrollX - (formRect.width/2)}px`;
     };
 
     async function handleProjectCreateChange(e) {
@@ -52,18 +46,18 @@ function AdminPortfolio() {
         e.preventDefault();
         await axios.post(`${process.env.REACT_APP_API_URL}project/create`, projectCreateFormData);
         alert("Project Created!");
-        fetchProjects();
+        fetchProjectsData();
     };
 
     return (
         <div>
             {selectedProject?._id ? (
-                <ProjectDetail project={selectedProject} onBack={setSelectedProject} onUpdateProject={handleProjectUpdate} onToggleSkillCreateForm={() => {}} onDeleteSkill={() => {}} onTogglePhotoCreateForm={() => {}} />
+                <ProjectDetail key={projects} fetchProjectsData={fetchProjectsData} onBack={setSelectedProject} selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
             ) : (
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                     <div className="flex justify-center items-center gap-2 md:col-span-2 xl:col-span-3">
                         <p className="text-2xl font-bold text-center">Projects</p>
-                        <button onClick={handleToggleProjectCreateForm} className="text-2xl text-blue-400">+</button>
+                        <button onClick={toggleProjectCreateForm} className="text-2xl text-blue-400">+</button>
                     </div>
                     {projects.map((project) => (
                         <ProjectCard project={project} onSelectProject={selectProject} onDeleteProject={() => {}} />
@@ -72,8 +66,6 @@ function AdminPortfolio() {
             )}
 
             <ProjectCreateForm formData={projectCreateFormData} onChange={handleProjectCreateChange} onSubmit={handleProjectCreateSubmit} isHidden={isProjectCreateFormHidden} />
-            <ProjectSkillCreateForm formData={projectSkillFormData} onChange={(e) => setProjectSkillFormData({ ...projectSkillFormData, [e.target.name]: e.target.value })} onSubmit={() => {}} isHidden={isProjectSkillCreateFormHidden} />
-            <ProjectPhotoCreateForm onChange={(e) => setProjectPhoto(e.target.files[0])} onSubmit={() => {}} isHidden={isProjectPhotoCreateFormHidden} />
 
         </div>
     );
