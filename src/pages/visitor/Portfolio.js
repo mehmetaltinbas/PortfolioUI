@@ -7,6 +7,7 @@ import ProjectDetail
 function Portfolio() {
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState({});
+    const [loading, setLoading] = useState(true);
 
 
     const fetchProjectsData = async () => {
@@ -15,6 +16,8 @@ function Portfolio() {
             setProjects(projectsResponse.projects);
         } catch (error) {
             console.error(`\n Error message --> ${error.message} \n Error stack --> ${error.stack} \n`);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -30,6 +33,14 @@ function Portfolio() {
         setSelectedProject(clickedProject);
     };
 
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen text-xl font-bold">
+                Loading...
+            </div>
+        )
+    }
 
     return (
         <div>

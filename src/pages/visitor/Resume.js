@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 function Resume() {
     const [user, setUser] = useState({});
     const [selectedExperience, setSelectedExperience] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     function formatDate(isoString) {
         const date = new Date(isoString);
@@ -37,6 +38,8 @@ function Resume() {
             setSelectedExperience(userData.experiences[0]);
         } catch (error) {
             console.error(`\n Error message --> ${error.message} \n Error stack --> ${error.stack} \n`);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -49,6 +52,14 @@ function Resume() {
         setSelectedExperience(experience);
     }
 
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen text-xl font-bold">
+                Loading...
+            </div>
+        )
+    }
     
     return (
         <div className="flex flex-col gap-16">

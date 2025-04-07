@@ -4,14 +4,17 @@ import Introduction from "../../components/sections/visitor/Introduction.js";
 
 function Home() {
     const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(true);
 
 
-    const fetctUserData = async () => {
+    async function fetctUserData() {
         try {
             const userResponse = (await axios.get(`${process.env.REACT_APP_API_URL}user/${process.env.REACT_APP_USER_ID}`)).data;
             setUser(userResponse.user);
         } catch (error) {
             console.error(`\n Error message --> ${error.message} \n Error stack --> ${error.stack} \n`);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -42,6 +45,14 @@ function Home() {
         }
     }
 
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen text-xl font-bold">
+                Loading...
+            </div>
+        )
+    }
     
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
