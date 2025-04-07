@@ -44,8 +44,8 @@ function Home() {
 
     
     return (
-        <div className="flex justify-center items-center gap-10">
-            <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+            <div className="flex flex-col justify-center items-center gap-2">
                 <img src={user.userPhotos?.find(userPhoto => userPhoto.type == 'profile')?.value} className="w-[200px] h-[200px] object-cover rounded-full"/>
             </div>
             <Introduction user={user} downloadCV={downloadCV} />
