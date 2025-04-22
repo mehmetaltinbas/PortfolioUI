@@ -1,7 +1,5 @@
 function More() {
-    return (
-        <p>More</p>
-    );
+    return <p>More</p>;
 }
 
 export default More;

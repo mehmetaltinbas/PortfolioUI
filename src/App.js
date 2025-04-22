@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Visitor Layout
 import VisitorLayout from './pages/visitor/VisitorLayout.js';
@@ -16,7 +16,7 @@ import AdminResume from './pages/admin/AdminResume.js';
 import AdminPortfolio from './pages/admin/AdminPortfolio.js';
 import AdminContact from './pages/admin/AdminContact.js';
 import AdminMore from './pages/admin/AdminMore.js';
-import ProtectedRoute from './utilities/ProtectedRoute.js'
+import ProtectedRoute from './utilities/ProtectedRoute.js';
 
 function App() {
     return (
@@ -33,15 +33,31 @@ function App() {
 
                 {/* Admin Routes */}
                 <Route element={<AdminLayout />}>
-                    <Route path="/admin" element={<ProtectedRoute element={<AdminHome />} />} />
-                    <Route path="/admin/resume" element={<ProtectedRoute element={<AdminResume />} />} />
-                    <Route path="/admin/portfolio" element={<ProtectedRoute element={<AdminPortfolio />} />} />
-                    <Route path="/admin/contact" element={<ProtectedRoute element={<AdminContact />} />} />
-                    <Route path="/admin/more" element={<ProtectedRoute element={<AdminMore />} />} />
+                    <Route
+                        path="/admin"
+                        element={<ProtectedRoute element={<AdminHome />} />}
+                    />
+                    <Route
+                        path="/admin/resume"
+                        element={<ProtectedRoute element={<AdminResume />} />}
+                    />
+                    <Route
+                        path="/admin/portfolio"
+                        element={
+                            <ProtectedRoute element={<AdminPortfolio />} />
+                        }
+                    />
+                    <Route
+                        path="/admin/contact"
+                        element={<ProtectedRoute element={<AdminContact />} />}
+                    />
+                    <Route
+                        path="/admin/more"
+                        element={<ProtectedRoute element={<AdminMore />} />}
+                    />
                 </Route>
 
                 <Route path="/admin/signin" element={<AdminSignIn />} />
-
             </Routes>
         </Router>
     );
