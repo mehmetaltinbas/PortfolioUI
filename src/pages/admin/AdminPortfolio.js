@@ -52,7 +52,7 @@ function AdminPortfolio() {
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                     <div className="flex justify-center items-center gap-2 md:col-span-2 xl:col-span-3">
                         <p className="text-2xl font-bold text-center">
-                            Projects
+                            Portfolio
                         </p>
                         <button
                             onClick={toggleProjectCreateForm}

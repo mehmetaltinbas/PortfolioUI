@@ -53,7 +53,7 @@ function Portfolio() {
             ) : (
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                     <p className="text-2xl font-bold text-center md:col-span-2 xl:col-span-3">
-                        Projects I've Built
+                        Portfolio
                     </p>
                     {projects.map((project) => (
                         <div key={project._id} data-id={project._id}>

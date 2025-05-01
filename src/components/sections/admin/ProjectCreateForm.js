@@ -50,7 +50,6 @@ function ProjectCreateForm({ isHidden, fetchProjectsData, toggleForm }) {
                     className="border p-2 rounded-full"
                 />
             </div>
-            {/* Similar for shortDescription, longDescription */}
             <button type="submit" className="p-2 border rounded-full">
                 Create
             </button>

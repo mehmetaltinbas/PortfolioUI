@@ -62,6 +62,16 @@ function ProjectUpdateForm({ selectedProject, setSelectedProject, fetchProjectsD
                     className="border p-2 rounded-[10px] w-full"
                 />
             </div>
+            <div className="flex justify-start items-center gap-2">
+                <label className="whitespace-nowrap">Order: </label>
+                <input
+                    type='number'
+                    name="order"
+                    onChange={handleChange}
+                    value={selectedProject.order}
+                    className="border p-2 rounded-[10px] w-[50px]"
+                />
+            </div>
             <button
                 type="submit"
                 className="px-2 py-1 border rounded-full w-fit"
