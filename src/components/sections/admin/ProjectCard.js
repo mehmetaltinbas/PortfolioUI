@@ -1,15 +1,21 @@
 import { FaFolder } from 'react-icons/fa';
 
-function PojectCard({ project, onSelectProject, onDeleteProject }) {
+function PojectCard({ project, onSelectProject, onDeleteProject, dragStart, dragOver, drop }) {
+
     function handleCardClick(e) {
         e.stopPropagation();
         onSelectProject(e, project);
     }
+
     return (
         <div
             key={project._id}
             data-id={project._id}
             onClick={handleCardClick}
+            onDragStart={dragStart}
+            onDragOver={dragOver}
+            onDrop={drop}
+            draggable='true'
             className="w-[200px] h-[200px] bg-white p-6 rounded-2xl shadow-md border
         flex flex-col justify-around items-center gap-2
         transition hover:border-[#00316E] duration-300 hover:cursor-pointer"
