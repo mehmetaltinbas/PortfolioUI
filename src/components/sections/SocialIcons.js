@@ -33,54 +33,54 @@ const SocialIcons = () => {
 
     return (
         <div className="fixed bottom-5 left-10 flex flex-col items-center gap-4">
-            {contacts.find((c) => c.type == 'github') && (
+            {contacts.find((c) => c.type.toLowerCase() == 'github') && (
                 <a
-                    href={contacts.find((c) => c.type == 'github')?.value}
+                    href={contacts.find((c) => c.type.toLowerCase() == 'github')?.value}
                     target="_blank"
                     className="text-gray-400 hover:text-gray-800 transition duration-300 text-2xl"
                 >
                     <FaGithub />
                 </a>
             )}
-            {contacts.find((c) => c.type == 'linkedin') && (
+            {contacts.find((c) => c.type.toLowerCase() == 'linkedin') && (
                 <a
-                    href={contacts.find((c) => c.type == 'linkedin')?.value}
+                    href={contacts.find((c) => c.type.toLowerCase() == 'linkedin')?.value}
                     target="_blank"
                     className="text-gray-400 hover:text-gray-800 transition duration-300 text-2xl"
                 >
                     <FaLinkedin />
                 </a>
             )}
-            {contacts.find((c) => c.type == 'upwork') && (
+            {contacts.find((c) => c.type.toLowerCase() == 'upwork') && (
                 <a
-                    href={contacts.find((c) => c.type == 'upwork')?.value}
+                    href={contacts.find((c) => c.type.toLowerCase() == 'upwork')?.value}
                     target="_blank"
                     className="text-gray-400 hover:text-gray-800 transition duration-300 text-2xl"
                 >
                     <SiUpwork />
                 </a>
             )}
-            {contacts.find((c) => c.type == 'twitter') && (
+            {contacts.find((c) => c.type.toLowerCase() == 'twitter' || c.type.toLowerCase() == 'x') && (
                 <a
-                    href={contacts.find((c) => c.type == 'twitter')?.value}
+                    href={contacts.find((c) => c.type.toLowerCase() == 'twitter' || c.type.toLowerCase() == 'x')?.value}
                     target="_blank"
                     className="text-gray-400 hover:text-gray-800 transition duration-300 text-2xl"
                 >
                     <FaTwitter />
                 </a>
             )}
-            {contacts.find((c) => c.type == 'instagram') && (
+            {contacts.find((c) => c.type.toLowerCase() == 'instagram') && (
                 <a
-                    href={contacts.find((c) => c.type == 'instagram')?.value}
+                    href={contacts.find((c) => c.type.toLowerCase() == 'instagram')?.value}
                     target="_blank"
                     className="text-gray-400 hover:text-gray-800 transition duration-300 text-2xl"
                 >
                     <FaInstagram />
                 </a>
             )}
-            {contacts.find((c) => c.type == 'youtube') && (
+            {contacts.find((c) => c.type.toLowerCase() == 'youtube') && (
                 <a
-                    href={contacts.find((c) => c.type == 'youtube')?.value}
+                    href={contacts.find((c) => c.type.toLowerCase() == 'youtube')?.value}
                     target="_blank"
                     className="text-gray-400 hover:text-gray-800 transition duration-300 text-2xl"
                 >
