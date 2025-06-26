@@ -1,10 +1,21 @@
 import { FaFolder } from 'react-icons/fa';
+import axios from 'axios';
 
-function PojectCard({ project, onSelectProject, onDeleteProject, dragStart, dragOver, drop }) {
+function PojectCard({ project, onSelectProject, dragStart, dragOver, drop }) {
 
     function handleCardClick(e) {
         e.stopPropagation();
         onSelectProject(e, project);
+    }
+
+    async function onDeleteProject(e, id) {
+        e.stopPropagation();
+        const response = await (axios.delete(`${process.env.REACT_APP_API_URL}project/delete/${id}`,
+            {
+                withCredentials: true
+            }
+        )).data
+        alert(response.message);
     }
 
     return (

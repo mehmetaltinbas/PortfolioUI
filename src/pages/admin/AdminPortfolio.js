@@ -122,7 +122,6 @@ function AdminPortfolio() {
                         <ProjectCard
                             project={project}
                             onSelectProject={selectProject}
-                            onDeleteProject={() => {}}
                             dragStart={(e) => dragStart(e, project._id)}
                             dragOver={dragOver}
                             drop={drop}
