@@ -12,6 +12,7 @@ function AdminPortfolio() {
     const [isProjectCreateFormHidden, setIsProjectCreateFormHidden] =
         useState(true);
     const [isProjectSkilDeleted, setIsProjectSkillDeleted] = useState(false);
+    const [isProjectSkillCreated, setIsProjectSkillCreated] = useState(false);
 
     const fetchProjectsData = async () => {
         const response = await axios.get(
@@ -22,10 +23,10 @@ function AdminPortfolio() {
 
     useEffect(() => {
         fetchProjectsData();
-    }, [isProjectSkilDeleted]);
+    }, [isProjectSkilDeleted, isProjectSkillCreated]);
 
     useEffect(() => {
-        if (isProjectSkilDeleted) {
+        if (isProjectSkilDeleted || isProjectSkillCreated) {
             setSelectedProject(projects.find(project => project._id == selectedProject._id));
             setIsProjectSkillDeleted(false);
         }
@@ -104,6 +105,7 @@ function AdminPortfolio() {
                     selectedProject={selectedProject}
                     setSelectedProject={setSelectedProject}
                     setIsProjectSkillDeleted={setIsProjectSkillDeleted}
+                    setIsProjectSkillCreated={setIsProjectSkillCreated}
                 />
             ) : (
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">

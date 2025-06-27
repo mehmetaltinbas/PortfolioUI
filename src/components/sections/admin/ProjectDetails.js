@@ -11,7 +11,8 @@ function ProjectDetails({
     onBack,
     selectedProject,
     setSelectedProject,
-    setIsProjectSkillDeleted
+    setIsProjectSkillDeleted,
+    setIsProjectSkillCreated
 }) {
     const [isProjectSkillCreateFormHidden, setIsProjectSkillCreateFormHidden] =
         useState(true);
@@ -136,6 +137,7 @@ function ProjectDetails({
                 selectedProject={selectedProject}
                 toggleForm={toggleProjectSkillCreateForm}
                 isHidden={isProjectSkillCreateFormHidden}
+                setIsProjectSkillCreated={setIsProjectSkillCreated}
             />
             <ProjectPhotoCreateForm
                 fetchProjectsData={fetchProjectsData}

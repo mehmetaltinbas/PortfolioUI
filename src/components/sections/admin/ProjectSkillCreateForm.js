@@ -6,6 +6,7 @@ function ProjectSkillCreateForm({
     selectedProject,
     toggleForm,
     isHidden,
+    setIsProjectSkillCreated
 }) {
     const [formData, setFormData] = useState({
         name: '',
@@ -21,6 +22,7 @@ function ProjectSkillCreateForm({
 
     async function handleSubmit(e, projectId) {
         e.preventDefault();
+        setIsProjectSkillCreated(true);
         try {
             const response = (
                 await axios.post(
