@@ -11,7 +11,7 @@ function ProjectDetails({
     onBack,
     selectedProject,
     setSelectedProject,
-    onDeleteSkill,
+    setIsProjectSkillDeleted
 }) {
     const [isProjectSkillCreateFormHidden, setIsProjectSkillCreateFormHidden] =
         useState(true);
@@ -29,6 +29,12 @@ function ProjectDetails({
         setIsProjectSkillCreateFormHidden((prev) => !prev);
         projectSkillCreateForm.style.top = `${buttonRect.bottom + window.scrollY}px`;
         projectSkillCreateForm.style.left = `${buttonRect.left + buttonRect.width / 2 + window.scrollX - formRect.width / 2}px`;
+    }
+
+    async function onDeleteSkill(e, skillId) {
+        const response = (await axios.delete(`${process.env.REACT_APP_API_URL}projectskill/delete/${skillId}`, { withCredentials: true })).data;
+        alert(`${response.message}`);
+        setIsProjectSkillDeleted(true);
     }
 
     async function toggleProjectPhotoCreateForm(e) {
@@ -85,7 +91,7 @@ function ProjectDetails({
                         >
                             <p className="whitespace-nowrap">• {skill.name}</p>
                             <button
-                                onClick={() => onDeleteSkill(skill._id)}
+                                onClick={(e) => onDeleteSkill(e, skill._id)}
                                 className="w-[20px] h-[20px] border rounded-full p-[2px] text-xs bg-red-200"
                             >
                                 X
