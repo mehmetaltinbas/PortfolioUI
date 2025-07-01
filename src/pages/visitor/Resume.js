@@ -47,6 +47,20 @@ function Resume() {
             const birthdate = new Date(userData.dateOfBirth);
             userData.age = new Date().getFullYear() - birthdate.getFullYear();
 
+            let aboutMeTexts = userData.about.split('\n')
+            userData.about = '';
+            for (let i = 0; i < aboutMeTexts.length; i++) {
+                let text = aboutMeTexts[i];
+                if (text[0] === ' ' && text[i] === ' ') {
+                    text = '&emsp;' + text;
+                }
+                if (!((i + 1) === aboutMeTexts.length)) {
+                    userData.about += text + '<br />';
+                } else {
+                    userData.about += text;
+                }
+            }
+
             setUser(userData);
             setSelectedExperience(userData.experiences[0]);
         } catch (error) {
@@ -86,7 +100,7 @@ function Resume() {
                 </div>
                 <div></div>
                 <div className="w-full mx-auto flex flex-col justify-center items-center gap-2">
-                    <p>{user.about}</p>
+                    <p dangerouslySetInnerHTML={{ __html: user.about }}></p>
                     <p className="underline">Skills</p>
                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
                         {user.skills?.map((skill) => (
