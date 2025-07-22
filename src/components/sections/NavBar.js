@@ -7,7 +7,7 @@ function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <section className="py-3 mb-3 bg-black shadow-lg">
+        <section className="py-3 md:py-5 bg-black shadow-lg">
             <div className="flex flex-col md:flex-row md:justify-center md:items-center gap-1 px-4">
                 <div className="flex justify-end md:hidden">
                     <button onClick={() => setIsOpen(!isOpen)}>
